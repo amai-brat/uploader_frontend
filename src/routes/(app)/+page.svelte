@@ -240,12 +240,6 @@
         Estimated downtime is around X minutes
     </p>
     -->
-    {#if /(kappa.lol|gachi.gay|femboy.beauty)$/.test($page.url.hostname) }
-        <p style="display: inline-block; margin: 0;">
-            <b>{$page.url.hostname}</b> is no longer hosted by me. Past files will not be recovered<br/>
-            <span style="float: right; font-size: 8pt;">&mdash;Supa</span>
-        </p>
-    {/if}
     <p>
         Max file size: 100 MiB<br />Drag or paste files anywhere on this page to
         start uploading

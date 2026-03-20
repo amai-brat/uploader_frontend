@@ -166,18 +166,6 @@
     </details>
 </div>
 
-<div>
-    <p>
-        Looking for a cool song/video queue manager for your Twitch chat?<br
-        />Either way, check out
-        <a
-            href="https://chat.vote/playlist/?ref=segs.lol"
-            target="_blank"
-            data-umami-event="badoge-playlist-link">chat.vote/playlist</a
-        >!
-    </p>
-</div>
-
 <style>
     summary {
         margin-top: 10px;
