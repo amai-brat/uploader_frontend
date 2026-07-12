@@ -241,7 +241,7 @@
     </p>
     -->
     <p>
-        Max file size: 100 MiB<br />Drag or paste files anywhere on this page to
+        Max file size: 50 MiB<br />Drag or paste files anywhere on this page to
         start uploading
     </p>
 
@@ -284,13 +284,6 @@
         display: block;
         background: gray url("/static/upload.svg") no-repeat center;
         background-size: 30%;
-    }
-
-    .maintenance {
-        font-weight: 700;
-        border-left: 3px solid #ffcc32;
-        padding: 0 10px;
-        margin: 5px;
     }
 
     #file-input {

@@ -81,7 +81,7 @@
                 <ul class="nav-links">
                     <li>
                         <a
-                            href="https://github.com/Mald-Entertainment-Studio/uploader"
+                            href="https://github.com/amai-brat/uploader_frontend"
                             target="_blank">GitHub</a
                         >
                     </li>
