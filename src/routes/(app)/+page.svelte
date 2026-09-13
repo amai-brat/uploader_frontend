@@ -148,6 +148,10 @@
                 true,
             );
 
+            const apiKey = localStorage.getItem("api_key") || "";
+            if (apiKey)
+              xhr.setRequestHeader("X-Api-Key", apiKey)
+
             xhr.upload?.addEventListener("progress", (e) => {
                 if (!e.lengthComputable) return;
 
