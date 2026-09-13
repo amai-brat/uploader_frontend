@@ -194,9 +194,44 @@
         upload(e.clipboardData.files);
     };
 
-    onMount(() => {
+    const loadUserFiles = async () => {
+        const apiKey = localStorage.getItem("api_key") || "";
+        if (!apiKey) return;
+
+        const response = await fetch(
+            `${dev ? import.meta.env.VITE_LOCAL_BACKEND : ""}/api/uploads`,
+            { method: "GET", headers: {"X-Api-Key": apiKey } },
+        );
+
+        const resp = await response.json();
+        return resp.objects ?? [];
+    }
+
+    onMount(async () => {
         mountDate = Date.now();
         loadFiles();
+
+        /** @type {Array<any>} */
+        const remoteUploads = await loadUserFiles();
+        uploadedFiles.update((arr) => {
+          const remoteFiles = remoteUploads.map((up) => {
+            return {
+              id: up.id,
+              name: up.name,
+              ext: up.ext,
+              type: up.type,
+              key: up.key,
+              date: up.date,
+              checksum: up.checksum,
+              origin: up.origin,
+            }
+          });
+
+          const uniqueArray = [...new Map([...arr, ...remoteFiles].map(item => [item.id, item])).values()];
+          uniqueArray.sort((a, b) => b.date - a.date);
+          return uniqueArray;
+        })
+        saveFiles();
     });
 </script>
 
