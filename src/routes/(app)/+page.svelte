@@ -144,7 +144,7 @@
 
             xhr.open(
                 "POST",
-                `${dev ? "http://localhost:8787" : ""}/api/upload${!$userSettings.fileContentDisposition ? "?skip-cd=true" : ""}`,
+                `${dev ? import.meta.env.VITE_LOCAL_BACKEND : ""}/api/upload${!$userSettings.fileContentDisposition ? "?skip-cd=true" : ""}`,
                 true,
             );
 
