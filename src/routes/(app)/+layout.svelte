@@ -30,7 +30,7 @@
     let twitchAvatar = null;
     const TWITCH_CLIENT_ID = import.meta.env.VITE_TWITCH_CLIENT_ID;
     const BACKEND_URL = dev ? import.meta.env.VITE_LOCAL_BACKEND : "";
-    const REDIRECT_URI = dev ? $page.url.href : "";
+    const REDIRECT_URI = $page.url.origin;
     
     const twitchLoginUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${TWITCH_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=`;
 
