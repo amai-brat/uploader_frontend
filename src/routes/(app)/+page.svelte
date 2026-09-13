@@ -200,7 +200,7 @@
 
     const loadUserFiles = async () => {
         const apiKey = localStorage.getItem("api_key") || "";
-        if (!apiKey) return;
+        if (!apiKey) return [];
 
         const response = await fetch(
             `${dev ? import.meta.env.VITE_LOCAL_BACKEND : ""}/api/uploads`,
