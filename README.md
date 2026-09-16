@@ -17,6 +17,9 @@
 
 The AGPL 3.0 license requires anyone who modifies or distributes the software to make their source code available to end-users when the software is used over a network. It's like the GPL but with extra coverage for network usage.
 
+## Fork changes
+- Added Twitch OAuth2 with implicit flow to access your media between browsers
+
 ## Developing
 
 Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`)
