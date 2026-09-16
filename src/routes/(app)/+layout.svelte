@@ -1,5 +1,6 @@
 <script>
     import { page } from "$app/stores";
+    import { dev } from "$app/environment";
     import Icon from "$lib/components/Icon.svelte";
     import {
         loadSettings,
@@ -9,6 +10,7 @@
     import { onMount } from "svelte";
     import Dialog from "$lib/components/Dialog.svelte";
     import Donate from "$lib/components/Donate.svelte";
+    import ApiKey from "$lib/components/ApiKey.svelte";
 
     /** @typedef {import("$lib/types.js").Theme} Theme */
 
@@ -18,8 +20,73 @@
     /** @type {HTMLDialogElement} */
     let donateDialog;
 
-    onMount(() => {
+    /** @type {HTMLDialogElement} */
+    let apiKeyDialog;
+
+    /** @type {string} */
+    let apiKey = "";
+
+    /** @type {string | null} */
+    let twitchAvatar = null;
+    const TWITCH_CLIENT_ID = import.meta.env.VITE_TWITCH_CLIENT_ID;
+    const BACKEND_URL = dev ? import.meta.env.VITE_LOCAL_BACKEND : "";
+    const REDIRECT_URI = $page.url.origin;
+    
+    const twitchLoginUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${TWITCH_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=`;
+
+    onMount(async () => {
         loadSettings();
+
+        apiKey = localStorage.getItem("api_key") || "";
+
+        const savedAvatar = localStorage.getItem("twitch_avatar");
+        if (savedAvatar) {
+            twitchAvatar = savedAvatar;
+        }
+
+        if (window.location.hash) {
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+            const token = hashParams.get("access_token");
+
+            if (token) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+
+                try {
+                    const backendRes = await fetch(`${BACKEND_URL}/api/key`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ token: token }),
+                    });
+
+                    if (backendRes.ok) {
+                        const data = await backendRes.json();
+                        if (data.api_key) {
+                            localStorage.setItem("api_key", data.api_key);
+                            apiKey = data.api_key;
+                        }
+                    }
+
+                    const twitchRes = await fetch("https://api.twitch.tv/helix/users", {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Client-Id": TWITCH_CLIENT_ID,
+                        },
+                    });
+
+                    if (twitchRes.ok) {
+                        const twitchData = await twitchRes.json();
+                        const avatarUrl = twitchData.data[0].profile_image_url;
+                        
+                        twitchAvatar = avatarUrl;
+                        localStorage.setItem("twitch_avatar", avatarUrl);
+                    }
+                } catch (err) {
+                    console.error("Failed to authenticate with Twitch:", err);
+                }
+            }
+        }
     });
 
     const changeTheme = (
@@ -53,6 +120,11 @@
                 <Donate></Donate>
             </section>
         </Dialog>
+        <Dialog bind:node={apiKeyDialog}>
+            <section>
+                <ApiKey {apiKey}></ApiKey>
+            </section>
+        </Dialog>
 
         <h1 class="name pride">{$page.url.hostname}</h1>
 
@@ -79,6 +151,20 @@
             </div>
             <div>
                 <ul class="nav-links">
+                    <li>
+                        {#if twitchAvatar}
+                            <button 
+                              style="all: unset;"
+                              on:click={(e) => {
+                                e.preventDefault();
+                                apiKeyDialog.showModal();
+                            }}>
+                              <img src={twitchAvatar} alt="Twitch Avatar" class="twitch-avatar" title="Connected to Twitch" />
+                            </button>
+                        {:else}
+                            <a href={twitchLoginUrl}>Connect with Twitch</a>
+                        {/if}
+                    </li>
                     <li>
                         <a
                             href="https://github.com/amai-brat/uploader_frontend"
@@ -319,6 +405,14 @@
             content: "•";
             margin: 0 0.5ch;
         }
+    }
+
+    .twitch-avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid rgb(var(--outl2));
     }
 
     .support-btn {

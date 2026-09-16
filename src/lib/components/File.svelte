@@ -37,7 +37,7 @@
             deleteDialog.returnValue = "";
             try {
                 const res = await fetch(
-                    `${dev ? "http://localhost:8787" : ""}/api/delete?key=${encodeURIComponent(file.key)}`,
+                    `${dev ? import.meta.env.VITE_LOCAL_BACKEND : ""}/api/delete?key=${encodeURIComponent(file.key)}`,
 
                     { method: "POST" },
                 );
