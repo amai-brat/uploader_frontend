@@ -19,7 +19,15 @@ The AGPL 3.0 license requires anyone who modifies or distributes the software to
 
 ## Developing
 
-Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`)
+
+Create `.env` with these variables:
+```
+VITE_TWITCH_CLIENT_ID=
+VITE_LOCAL_BACKEND=http://localhost:5000
+```
+
+Start a development server:
 
 ```bash
 npm run dev
