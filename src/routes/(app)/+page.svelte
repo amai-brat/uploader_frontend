@@ -10,6 +10,7 @@
     import FileDisplay from "$lib/components/File.svelte";
     import { dev } from "$app/environment";
     import { cleanBuffer } from "$lib/utils.js";
+    import * as m from "$lib/paraglide/messages.js";
 
     let mountDate = Date.now();
 
@@ -43,7 +44,7 @@
             const fr = new FileReader();
             fr.onload = () => {
                 if (!(fr.result instanceof ArrayBuffer))
-                    return reject("Failed reading image buffer");
+                    return reject(m["upload.error_reading_buffer"]());
 
                 const cleanedBuffer = cleanBuffer(fr.result);
                 const blob = new Blob([cleanedBuffer], { type: file.type });
@@ -79,7 +80,7 @@
                 try {
                     formData.append("file", await removeExif(file));
                 } catch (err) {
-                    return notifyError(`Error reading "${file.name}":\n${err}`);
+                    return notifyError(m["upload.error_reading"]({ filename: file.name, err: String(err) }));
                 }
             } else {
                 formData.append("file", file);
@@ -92,19 +93,15 @@
                     if (++completed >= filesCount) uploadProgress = null;
 
                     if (xhr.status === 413) {
-                        return notifyError(
-                            `Failed uploading "${file.name}": File too large`,
-                        );
+                        return notifyError(m["upload.error_too_large"]({ filename: file.name }));
                     } else if (xhr.status !== 200) {
                         try {
                             const res = JSON.parse(xhr.response);
                             return notifyError(
-                                `Error uploading "${file.name}": (${xhr.status})\n${JSON.stringify(res, null, 4)}`,
+                                m["upload.error_uploading_detailed"]({ filename: file.name, status: xhr.status, res: JSON.stringify(res, null, 4) })
                             );
                         } catch (_) {
-                            return notifyError(
-                                `Error uploading "${file.name}": (${xhr.status})`,
-                            );
+                            return notifyError(m["upload.error_uploading"]({ filename: file.name, status: xhr.status }));
                         }
                     }
 
@@ -128,16 +125,12 @@
                     });
                     saveFiles();
                 } catch (err) {
-                    notifyError(
-                        `Unexpected error uploading "${file.name}": (${xhr.status})\n${err}`,
-                    );
+                    notifyError(m["upload.error_unexpected"]({ filename: file.name, status: xhr.status, err: String(err) }));
                 }
             });
 
             xhr.addEventListener("error", (e) => {
-                notifyError(
-                    `Failed uploading "${file.name}": ${e.loaded} bytes transferred`,
-                );
+                notifyError(m["upload.error_transfer"]({ filename: file.name, loaded: e.loaded }));
                 totalProgress[progressId] = 100;
                 if (++completed >= files.length) uploadProgress = null;
             });
@@ -269,19 +262,12 @@
             on:click={(e) => {
                 e.preventDefault();
                 tosDialog.showModal();
-            }}>Terms and Privacy Policy</a
+            }}>{m["upload.terms_link"]()}</a
         >
     </p>
-    <!--
-    <p class="maintenance">
-        ⚠️ Maintenance is in progress<br>
-        File uploading and deletion will be temporarily unavailable<br>
-        Estimated downtime is around X minutes
-    </p>
-    -->
+
     <p>
-        Max file size: 50 MiB<br />Drag or paste files anywhere on this page to
-        start uploading
+        {m["upload.max_size"]()}<br />{m["upload.drag_paste"]()}
     </p>
 
     <div class="upload-area">
@@ -295,12 +281,12 @@
                 multiple
                 accept="image/*,video/*,audio/*,*/*"
             />
-            Choose Files
+            {m["upload.choose_files"]()}
         </label>
     </div>
 
     {#if uploadProgress !== null}
-        <p>Uploading... ({uploadProgress}%)</p>
+        <p>{m["upload.uploading"]({ progress: uploadProgress })}</p>
     {/if}
 </section>
 
@@ -311,6 +297,7 @@
 </div>
 
 <style lang="scss">
+    /* ... existing CSS ... */
     .drop-zone {
         position: fixed;
         top: 0;

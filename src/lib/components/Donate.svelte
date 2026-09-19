@@ -1,16 +1,20 @@
 <script>
     import Icon from "./Icon.svelte";
+    import * as m from "$lib/paraglide/messages.js";
 </script>
 
 <h2 class="title">
     <Icon class="icon" src="/static/heart.svg"></Icon>
-    Support
+    {m["support.title"]()}
 </h2>
 
-<p>This website is an entirely free and ad-less service sustained without profit in mind.<br />Every donation is greatly appreciated!</p>
+<p>
+    {m["support.desc_1"]()}<br />
+    {m["support.desc_2"]()}
+</p>
 
 <p>
-    <b>If you really want to donate, write an email with request to add donation here:</b><br />
+    <b>{m["support.donate_request"]()}</b><br />
     <a href="mailto:amai@cock.li" target="_blank"><b>amai@cock.li</b></a>
 </p>
 

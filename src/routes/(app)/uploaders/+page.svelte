@@ -2,6 +2,7 @@
     import { browser } from "$app/environment";
     import { page } from "$app/stores";
     import { userSettings } from "$lib/userSettings";
+    import * as m from "$lib/paraglide/messages.js";
 
     const url = $page.url.origin;
 
@@ -36,8 +37,8 @@
             <p>
                 <a
                     href={sharexConfigURL.toString()}
-                    data-umami-event="sharex-download">Click here</a
-                > to download the ShareX 11.5+ config
+                    data-umami-event="sharex-download">{m["uploaders.click_here"]()}</a
+                > {m["uploaders.download_sharex"]()}
             </p>
         {/if}
     </details>
@@ -47,11 +48,11 @@
     <details open>
         <summary>Chatterino</summary>
         <div>
-            <p>Settings; External Tools; Image Uploader</p>
+            <p>{m["uploaders.chatterino_path"]()}</p>
 
             <table>
                 <tr>
-                    <th>Request URL:</th>
+                    <th>{m["uploaders.request_url"]()}</th>
                     <td
                         >{endpoints.upload}{!$userSettings.fileContentDisposition
                             ? "?skip-cd=true"
@@ -59,17 +60,17 @@
                     >
                 </tr>
                 <tr>
-                    <th>Form field:</th>
+                    <th>{m["uploaders.form_field"]()}</th>
                     <td>file</td>
                 </tr>
                 <tr>
-                    <th>Image link:</th>
+                    <th>{m["uploaders.image_link"]()}</th>
                     <td
                         >{`{link}${$userSettings.appendFileExt ? "{ext}" : ""}`}</td
                     >
                 </tr>
                 <tr>
-                    <th>Deletion link:</th>
+                    <th>{m["uploaders.deletion_link"]()}</th>
                     <td>{"{delete}"}</td>
                 </tr>
             </table>
@@ -87,8 +88,8 @@
             >
         </summary>
         <p>
-            Native Twitch chat client for mobile -- <br />Same configuration
-            format as Chatterino, uploader defaults to
+            {m["uploaders.dankchat_desc1"]()}<br />
+            {m["uploaders.dankchat_desc2"]()}
             <a target="_blank" href="https://kappa.lol/">kappa.lol</a>.
         </p>
     </details>
@@ -100,7 +101,7 @@
         <div>
             <table>
                 <tr>
-                    <th>Upload:</th>
+                    <th>{m["uploaders.upload"]()}</th>
                     <td class="code">
                         curl "{endpoints.upload}" -F
                         "file=@/home/supa/kappa.png"
@@ -127,7 +128,7 @@
         <div>
             <table>
                 <tr>
-                    <th>Delete:</th>
+                    <th>{m["uploaders.delete"]()}</th>
                     <td class="code">
                         curl "{endpoints.delete}?key=$fileKey"
                     </td>
@@ -141,7 +142,7 @@
         <div>
             <table>
                 <tr>
-                    <th>Object:</th>
+                    <th>{m["uploaders.object"]()}</th>
                     <td class="code">
                         curl "{endpoints.object}?id=$fileId"
                     </td>

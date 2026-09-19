@@ -55,5 +55,39 @@
     "conclusion_2": "We reserve the right to amend these Terms and the Privacy Policy at any time without notice.",
     "contact": "Contact:",
     "last_updated": "Last Updated: July 12, 2026"
+  },
+  "support": {
+    "title": "Support",
+    "desc_1": "This website is an entirely free and ad-less service sustained without profit in mind.",
+    "desc_2": "Every donation is greatly appreciated!",
+    "donate_request": "If you really want to donate, write an email with request to add donation here:"
+  },
+  "upload": {
+    "error_reading_buffer": "Failed reading image buffer",
+    "error_reading": "Error reading \"{filename}\":\n{err}",
+    "error_too_large": "Failed uploading \"{filename}\": File too large",
+    "error_uploading_detailed": "Error uploading \"{filename}\": ({status})\n{res}",
+    "error_uploading": "Error uploading \"{filename}\": ({status})",
+    "error_unexpected": "Unexpected error uploading \"{filename}\": ({status})\n{err}",
+    "error_transfer": "Failed uploading \"{filename}\": {loaded} bytes transferred",
+    "terms_link": "Terms and Privacy Policy",
+    "max_size": "Max file size: 50 MiB",
+    "drag_paste": "Drag or paste files anywhere on this page to start uploading",
+    "choose_files": "Choose Files",
+    "uploading": "Uploading... ({progress}%)"
+  },
+  "uploaders": {
+    "click_here": "Click here",
+    "download_sharex": "to download the ShareX 11.5+ config",
+    "chatterino_path": "Settings -> External Tools -> Image Uploader",
+    "request_url": "Request URL:",
+    "form_field": "Form field:",
+    "image_link": "Image link:",
+    "deletion_link": "Deletion link:",
+    "dankchat_desc1": "Native Twitch chat client for mobile -- ",
+    "dankchat_desc2": "Same configuration format as Chatterino, uploader defaults to ",
+    "upload": "Upload:",
+    "delete": "Delete:",
+    "object": "Object:"
   }
 }
