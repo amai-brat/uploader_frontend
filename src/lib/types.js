@@ -13,6 +13,7 @@
  */
 
 /** @typedef {"catppuccin" | "dark" | "light" | "amoled"} Theme */
+/** @typedef {"en" | "ru" } Lang */
 
 /**
  * @typedef {Object} UserSettings
@@ -22,6 +23,7 @@
  * @property {Boolean} stripExif
  * @property {Boolean} showThumbnails
  * @property {Theme} theme
+ * @property {Lang} lang
  */
 
 export default {};

@@ -8,14 +8,20 @@
         userSettings,
     } from "$lib/userSettings.js";
     import { onMount } from "svelte";
+    import { setLocale,  } from '$lib/paraglide/runtime.js';
+    import * as m from "$lib/paraglide/messages.js";
     import Dialog from "$lib/components/Dialog.svelte";
     import Donate from "$lib/components/Donate.svelte";
     import ApiKey from "$lib/components/ApiKey.svelte";
 
     /** @typedef {import("$lib/types.js").Theme} Theme */
+    /** @typedef {import("$lib/types.js").Lang} Lang */
 
     /** @type {Theme[]} */
     const themes = ["light", "dark", "amoled", "catppuccin"];
+
+    /** @type {Lang[]} */
+    const langs = ["en", "ru"];
 
     /** @type {HTMLDialogElement} */
     let donateDialog;
@@ -98,6 +104,17 @@
         $userSettings.theme = theme;
         saveSettings();
     };
+
+    const changeLang = (
+        /** @type {MouseEvent} */ e,
+        /** @type {Lang} */ lang,
+    ) => {
+        e.preventDefault();
+
+        setLocale(lang, {reload: false});
+        $userSettings.lang = lang;
+        saveSettings();
+    };
 </script>
 
 <svelte:head>
@@ -113,6 +130,7 @@
     />
 </svelte:head>
 
+{#key $userSettings.lang}
 <main>
     <div class="wrapper">
         <Dialog bind:node={donateDialog}>
@@ -136,7 +154,7 @@
                             aria-current={$page.url.pathname === "/"
                                 ? "page"
                                 : undefined}
-                            href="/">Home</a
+                            href="/">{m["main.home"]()}</a
                         >
                     </li>
                     <li>
@@ -147,7 +165,7 @@
                             href="/uploaders">Uploaders</a
                         >
                     </li>
-                </ul>
+                  </ul>
             </div>
             <div>
                 <ul class="nav-links">
@@ -201,6 +219,15 @@
                             href="/"
                             class="theme-name"
                             on:click={(e) => changeTheme(e, theme)}>{theme}</a
+                        >
+                    {/each}
+                </div>
+                <div class="option themes">
+                    <span>Language:</span>
+                    {#each langs as lang}
+                        <a
+                            href="/"
+                            on:click={(e) => changeLang(e, lang)}>{lang}</a
                         >
                     {/each}
                 </div>
@@ -265,6 +292,7 @@
         <slot />
     </div>
 </main>
+{/key}
 
 <style lang="scss">
     :root {
