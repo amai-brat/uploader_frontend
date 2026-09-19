@@ -1,22 +1,31 @@
-<h2>Terms of Service and Privacy Policy</h2>
-<p>These Terms of Service (&quot;Terms&quot;) govern your use of this Service, and our commitment to your privacy.</p>
-<p>By using the Service, you agree to the following:</p>
-<p><strong>1. User-Generated Content:</strong> We are not responsible for user-generated content (&quot;Content&quot;).</p>
-<p><strong>2. Views of Authors:</strong> Content submitted reflects the views of the author only.</p>
-<p><strong>3. Age Restriction:</strong> This Service is for users who are at least 18 years old.</p>
-<p><strong>4. Content Review:</strong> All Content may be reviewed by us.</p>
-<p><strong>5. Prohibited Content:</strong> Do not submit illegal or malicious Content.</p>
-<p><strong>6. Responsibility:</strong> You are responsible for the Content you submit and any resulting harm.</p>
-<p><strong>7. Content Modification and Removal:</strong> We may remove or modify Content at any time.</p>
-<p><strong>8. Commercial Use:</strong> Prior approval is required for third-party commercial use.</p>
-<p><strong>9. Termination:</strong> We may terminate your access at any time.</p>
-<p>We respect your privacy and commit to the following:</p>
-<p><strong>1. Data Collection:</strong> We collect and store minimal data, including your IP address and browser user-agent.</p>
-<p><strong>2. Data Usage:</strong> This data is used solely for the purpose of operating and improving the Service.</p>
-<p><strong>3. Data Sharing:</strong> We do not share your data with third parties.</p>
-<p><strong>4. Data Security:</strong> We take appropriate measures to protect your data from unauthorized access.</p>
-<p><strong>5. User Rights:</strong> You have the right to request information about your data and to request its deletion.</p>
-<p>Your use of the Service implies acceptance of these Terms and this Privacy Policy.</p>
-<p>We reserve the right to amend these Terms and the Privacy Policy at any time without notice.</p>
-<p><strong>Contact: amai@cock.li</strong></p>
-<p><strong>Last Updated: July 12, 2026</strong></p>
+<script>
+  import * as m from "$lib/paraglide/messages.js";
+</script>
+
+<h2>{m["terms.title"]()}</h2>
+<p>{m["terms.intro_1"]()}</p>
+<p>{m["terms.intro_2"]()}</p>
+
+<p><strong>{m["terms.t1_title"]()}</strong> {m["terms.t1_desc"]()}</p>
+<p><strong>{m["terms.t2_title"]()}</strong> {m["terms.t2_desc"]()}</p>
+<p><strong>{m["terms.t3_title"]()}</strong> {m["terms.t3_desc"]()}</p>
+<p><strong>{m["terms.t4_title"]()}</strong> {m["terms.t4_desc"]()}</p>
+<p><strong>{m["terms.t5_title"]()}</strong> {m["terms.t5_desc"]()}</p>
+<p><strong>{m["terms.t6_title"]()}</strong> {m["terms.t6_desc"]()}</p>
+<p><strong>{m["terms.t7_title"]()}</strong> {m["terms.t7_desc"]()}</p>
+<p><strong>{m["terms.t8_title"]()}</strong> {m["terms.t8_desc"]()}</p>
+<p><strong>{m["terms.t9_title"]()}</strong> {m["terms.t9_desc"]()}</p>
+
+<p>{m["terms.privacy_intro"]()}</p>
+
+<p><strong>{m["terms.p1_title"]()}</strong> {m["terms.p1_desc"]()}</p>
+<p><strong>{m["terms.p2_title"]()}</strong> {m["terms.p2_desc"]()}</p>
+<p><strong>{m["terms.p3_title"]()}</strong> {m["terms.p3_desc"]()}</p>
+<p><strong>{m["terms.p4_title"]()}</strong> {m["terms.p4_desc"]()}</p>
+<p><strong>{m["terms.p5_title"]()}</strong> {m["terms.p5_desc"]()}</p>
+
+<p>{m["terms.conclusion_1"]()}</p>
+<p>{m["terms.conclusion_2"]()}</p>
+
+<p><strong>{m["terms.contact"]()} amai@cock.li</strong></p>
+<p><strong>{m["terms.last_updated"]()}</strong></p>

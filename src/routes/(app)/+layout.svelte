@@ -8,14 +8,20 @@
         userSettings,
     } from "$lib/userSettings.js";
     import { onMount } from "svelte";
+    import { setLocale,  } from '$lib/paraglide/runtime.js';
+    import * as m from "$lib/paraglide/messages.js";
     import Dialog from "$lib/components/Dialog.svelte";
     import Donate from "$lib/components/Donate.svelte";
     import ApiKey from "$lib/components/ApiKey.svelte";
 
     /** @typedef {import("$lib/types.js").Theme} Theme */
+    /** @typedef {import("$lib/types.js").Lang} Lang */
 
     /** @type {Theme[]} */
     const themes = ["light", "dark", "amoled", "catppuccin"];
+
+    /** @type {Lang[]} */
+    const langs = ["en", "ru"];
 
     /** @type {HTMLDialogElement} */
     let donateDialog;
@@ -98,6 +104,17 @@
         $userSettings.theme = theme;
         saveSettings();
     };
+
+    const changeLang = (
+        /** @type {MouseEvent} */ e,
+        /** @type {Lang} */ lang,
+    ) => {
+        e.preventDefault();
+
+        setLocale(lang, {reload: false});
+        $userSettings.lang = lang;
+        saveSettings();
+    };
 </script>
 
 <svelte:head>
@@ -113,6 +130,7 @@
     />
 </svelte:head>
 
+{#key $userSettings.lang}
 <main>
     <div class="wrapper">
         <Dialog bind:node={donateDialog}>
@@ -136,7 +154,7 @@
                             aria-current={$page.url.pathname === "/"
                                 ? "page"
                                 : undefined}
-                            href="/">Home</a
+                            href="/">{m["main.home"]()}</a
                         >
                     </li>
                     <li>
@@ -144,10 +162,10 @@
                             aria-current={$page.url.pathname === "/uploaders"
                                 ? "page"
                                 : undefined}
-                            href="/uploaders">Uploaders</a
+                            href="/uploaders">{m["main.uploaders"]()}</a
                         >
                     </li>
-                </ul>
+                  </ul>
             </div>
             <div>
                 <ul class="nav-links">
@@ -159,10 +177,15 @@
                                 e.preventDefault();
                                 apiKeyDialog.showModal();
                             }}>
-                              <img src={twitchAvatar} alt="Twitch Avatar" class="twitch-avatar" title="Connected to Twitch" />
+                              <img 
+                                src={twitchAvatar} 
+                                alt={m["main.twitch_avatar_alt"]()} 
+                                class="twitch-avatar" 
+                                title={m["main.connected_twitch"]()} 
+                              />
                             </button>
                         {:else}
-                            <a href={twitchLoginUrl}>Connect with Twitch</a>
+                            <a href={twitchLoginUrl}>{m["main.connect_twitch"]()}</a>
                         {/if}
                     </li>
                     <li>
@@ -181,7 +204,7 @@
                             }}
                         >
                             <Icon class="icon" src="/static/heart.svg"></Icon>
-                            Support
+                            {m["main.support"]()}
                         </a>
                     </li>
                 </ul>
@@ -189,18 +212,27 @@
         </nav>
         <hr />
 
-        <noscript>JavaScript is required for this website.</noscript>
+        <noscript>{m["main.js_required"]()}</noscript>
 
         <details class="settings">
-            <summary>Settings</summary>
+            <summary>{m["main.settings"]()}</summary>
             <div class="container">
                 <div class="option themes">
-                    <span>Theme:</span>
+                    <span>{m["main.theme"]()}:</span>
                     {#each themes as theme}
                         <a
                             href="/"
                             class="theme-name"
                             on:click={(e) => changeTheme(e, theme)}>{theme}</a
+                        >
+                    {/each}
+                </div>
+                <div class="option themes">
+                    <span>{m["main.lang"]()}:</span>
+                    {#each langs as lang}
+                        <a
+                            href="/"
+                            on:click={(e) => changeLang(e, lang)}>{lang}</a
                         >
                     {/each}
                 </div>
@@ -212,7 +244,7 @@
                         bind:checked={$userSettings.appendFileExt}
                         on:change={saveSettings}
                     />
-                    Append file extension to URL
+                    {m["main.append_file_ext"]()}
                 </label>
                 <label class="option">
                     <input
@@ -222,7 +254,7 @@
                         bind:checked={$userSettings.rememberFileHistory}
                         on:change={saveSettings}
                     />
-                    Remember upload history, stored locally
+                    {m["main.remember_history"]()}
                 </label>
                 <label class="option">
                     <input
@@ -232,10 +264,10 @@
                         bind:checked={$userSettings.fileContentDisposition}
                         on:change={saveSettings}
                     />
-                    Share your file's original name&nbsp;
+                    {m["main.share_original_name"]()}&nbsp;
                     <span
                         class="tooltip"
-                        title="Enabling this will show your file's original (local) name to other users in supported browsers; e.g. when saving."
+                        title={m["main.share_original_name_tooltip"]()}
                         >( ? )</span
                     >
                 </label>
@@ -247,7 +279,7 @@
                         bind:checked={$userSettings.stripExif}
                         on:change={saveSettings}
                     />
-                    Entirely strip Exif data from image
+                    {m["main.strip_exif"]()}
                 </label>
                 <label class="option">
                     <input
@@ -257,7 +289,7 @@
                         bind:checked={$userSettings.showThumbnails}
                         on:change={saveSettings}
                     />
-                    Show file thumbnails
+                    {m["main.show_thumbnails"]()}
                 </label>
             </div>
         </details>
@@ -265,8 +297,10 @@
         <slot />
     </div>
 </main>
+{/key}
 
 <style lang="scss">
+    /* ... The CSS rules stay exactly the same ... */
     :root {
         --font-body: "Noto Sans", sans-serif, -apple-system, "Helvetica Neue";
     }
@@ -328,7 +362,6 @@
         &[open] {
             background-color: rgb(var(--bg2));
             summary {
-                // margin-bottom: 5px;
                 border-bottom: 2px solid rgb(var(--primary));
             }
         }

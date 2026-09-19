@@ -1,4 +1,5 @@
 import { writable, get } from "svelte/store";
+import { getLocale, setLocale } from "$lib/paraglide/runtime.js";
 
 /** @type {import('$lib/types.js').UserSettings} */
 const defaultSettings = {
@@ -7,7 +8,8 @@ const defaultSettings = {
     "fileContentDisposition": true,
     "stripExif": false,
     "showThumbnails": true,
-    "theme": "dark"
+    "theme": "dark",
+    "lang": "en"
 }
 
 /**
@@ -23,7 +25,9 @@ export const loadSettings = () => {
 
     userSettings.update((def) => {
         return Object.assign(def, savedSettings);
-    })
+    });
+
+    setLocale(savedSettings.lang, { reload: false });
 };
 
 export const saveSettings = () => {
