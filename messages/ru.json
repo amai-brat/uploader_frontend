@@ -1,6 +1,21 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "main": {
-    "home": "Главная"
+    "home": "Главная",
+    "uploaders": "Загрузчики",
+    "connect_twitch": "Войти через Twitch",
+    "connected_twitch": "Подключено к Twitch",
+    "twitch_avatar_alt": "Аватар Twitch",
+    "support": "Поддержать",
+    "settings": "Настройки",
+    "theme": "Тема",
+    "lang": "Язык",
+    "js_required": "Для работы этого сайта необходим JavaScript.",
+    "append_file_ext": "Добавлять расширение файла в URL",
+    "remember_history": "Запоминать историю загрузок (хранится локально)",
+    "share_original_name": "Делиться исходным именем файла",
+    "share_original_name_tooltip": "Включение этой опции покажет исходное (локальное) имя файла другим пользователям в поддерживаемых браузерах (например, при сохранении).",
+    "strip_exif": "Полностью удалять Exif-данные из изображений",
+    "show_thumbnails": "Показывать миниатюры файлов"
   }
 }

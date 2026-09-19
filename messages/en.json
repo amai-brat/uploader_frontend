@@ -1,6 +1,21 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format",
+  "$schema": "https://inlang.com/schema/inlang-message-format",
   "main": {
-    "home": "Home"
+    "home": "Home",
+    "uploaders": "Uploaders",
+    "connect_twitch": "Connect with Twitch",
+    "connected_twitch": "Connected to Twitch",
+    "twitch_avatar_alt": "Twitch Avatar",
+    "support": "Support",
+    "settings": "Settings",
+    "theme": "Theme",
+    "lang": "Language",
+    "js_required": "JavaScript is required for this website.",
+    "append_file_ext": "Append file extension to URL",
+    "remember_history": "Remember upload history, stored locally",
+    "share_original_name": "Share your file's original name",
+    "share_original_name_tooltip": "Enabling this will show your file's original (local) name to other users in supported browsers; e.g. when saving.",
+    "strip_exif": "Entirely strip Exif data from image",
+    "show_thumbnails": "Show file thumbnails"
   }
 }
